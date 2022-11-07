@@ -3,12 +3,23 @@
 //
 
 include { SAMPLESHEET_CHECK } from '../../modules/local/samplesheet_check'
-
+include { CREATE_CSV_FROM_FOLDER } from '../../modules/local/create_csv_from_folder'
 workflow INPUT_CHECK {
     take:
     samplesheet // file: /path/to/samplesheet.csv
+    folder // path :path/to/folder_with_fastqc
+
+
 
     main:
+    if( 2>3
+        //!samplesheet.exist() 
+        ) {
+        samplesheet = file(CREATE_CSV_FROM_FOLDER (folder).csv)
+    }
+
+
+    
     SAMPLESHEET_CHECK ( samplesheet )
         .csv
         .splitCsv ( header:true, sep:',' )

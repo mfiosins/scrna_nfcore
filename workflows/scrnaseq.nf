@@ -10,7 +10,7 @@ def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
 WorkflowScrnaseq.initialise(params, log)
 
 def checkPathParamList = [
-    params.input, params.multiqc_config, params.fasta, params.gtf,
+    params.input, params.input_folder, params.multiqc_config, params.fasta, params.gtf,
     params.transcript_fasta, params.salmon_index, params.kallisto_index,
     params.star_index, params.txp2gene, params.barcode_whitelist, params.cellranger_index
 ]
@@ -70,7 +70,9 @@ ch_output_docs_images = file("$projectDir/docs/images/", checkIfExists: true)
 (protocol, chemistry, other_parameters) = WorkflowScrnaseq.formatProtocol(params.protocol, params.aligner)
 
 // general input and params
+
 ch_input = file(params.input)
+ch_input_folder = params.input_folder
 ch_genome_fasta = params.fasta ? file(params.fasta) : []
 ch_gtf = params.gtf ? file(params.gtf) : []
 ch_transcript_fasta = params.transcript_fasta ? file(params.transcript_fasta): []
@@ -106,7 +108,7 @@ workflow SCRNASEQ {
     ch_mtx_matrices = Channel.empty()
 
     // Check input files and stage input data
-    ch_fastq = INPUT_CHECK( ch_input ).reads
+    ch_fastq = INPUT_CHECK( ch_input, ch_input_folder ).reads
 
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
 

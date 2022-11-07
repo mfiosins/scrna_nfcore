@@ -12,7 +12,7 @@ class WorkflowScrnaseq {
     public static void initialise(params, log) {
         genomeExists(params, log)
 
-        if (!params.input) {
+        if (!params.input && !params.input_folder) {
             log.error "Please provide an input samplesheet with --input"
             System.exit(1)
         }
