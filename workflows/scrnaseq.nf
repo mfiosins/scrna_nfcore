@@ -71,8 +71,8 @@ ch_output_docs_images = file("$projectDir/docs/images/", checkIfExists: true)
 
 // general input and params
 
-ch_input = file(params.input)
-ch_input_folder = params.input_folder
+ch_input = params.input ? file(params.input) : []
+ch_input_folder = params.input_folder ? Channel.fromPath(params.input_folder) : []
 ch_genome_fasta = params.fasta ? file(params.fasta) : []
 ch_gtf = params.gtf ? file(params.gtf) : []
 ch_transcript_fasta = params.transcript_fasta ? file(params.transcript_fasta): []

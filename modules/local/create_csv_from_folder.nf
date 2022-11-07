@@ -19,6 +19,7 @@ process CREATE_CSV_FROM_FOLDER {
 
     script: // This script is bundled with the pipeline, in nf-core/scrnaseq/bin/
     """
+    echo "Create csv"
     create_csv_from_folder.py \\
         $csv_from_folder \\
         samplesheet.valid.csv
