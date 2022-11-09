@@ -12,7 +12,8 @@ process CREATE_CSV_FROM_FOLDER {
 
     output:
     path '*.csv'       , emit: csv
-    
+    path "versions.yml", emit: versions
+
 
     when:
     task.ext.when == null || task.ext.when
@@ -21,7 +22,7 @@ process CREATE_CSV_FROM_FOLDER {
     """
     echo "Create csv"
     create_csv_from_folder.py \\
-        $csv_from_folder \\
+        $input_folder \\
         samplesheet.valid.csv
 
     cat <<-END_VERSIONS > versions.yml

@@ -14,7 +14,7 @@ workflow INPUT_CHECK {
     main:
     print("Starting input check")
     if(samplesheet){
-        print("Samplesheet check")    
+        print("Samplesheet check")
         SAMPLESHEET_CHECK ( samplesheet )
             .csv
             .splitCsv ( header:true, sep:',' )
