@@ -22,8 +22,8 @@ process CREATE_CSV_FROM_FOLDER {
     """
     echo "Create csv"
     create_csv_from_folder.py \\
-        $input_folder \\
-        samplesheet.valid.csv
+        --input_folder $input_folder
+
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
