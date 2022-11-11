@@ -35,7 +35,7 @@ with open("test_sample.csv", 'w') as myfile:
     writer.writeheader()
     for i in range(len(sample)):
         #print ({'sample':sample[i],"fastq1" :fastq1[i],"fastq2" :fastq2[i]})
-        writer.writerow({'sample':sample[i], "fastq_1" :os.path.join(args.input_folder, fastq1[i]), "fastq_2" :os.path.join(args.input_folder, fastq2[i])})
+        writer.writerow({'sample':sample[i], "fastq_1" : fastq1[i], "fastq_2": fastq2[i]})
 
 
 

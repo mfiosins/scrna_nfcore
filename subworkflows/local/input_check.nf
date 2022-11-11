@@ -9,10 +9,9 @@ workflow INPUT_CHECK {
     samplesheet // file: /path/to/samplesheet.csv
     folder // path :path/to/folder_with_fastqc
 
-
-
     main:
     print("Starting input check")
+    print(folder)
     if(!samplesheet){
         samplesheet = CREATE_CSV_FROM_FOLDER (folder)
             .csv
@@ -38,15 +37,20 @@ def create_fastq_channel(LinkedHashMap row) {
     def meta = [:]
     meta.id         = row.sample
     meta.single_end = row.single_end.toBoolean()
-
     // add path(s) of the fastq file(s) to the meta map
     def fastq_meta = []
+    if (params.input_folder) {
+       row.fastq_1 = params.input_folder + "/" + row.fastq_1 
+    }
     if (!file(row.fastq_1).exists()) {
         exit 1, "ERROR: Please check input samplesheet -> Read 1 FastQ file does not exist!\n${row.fastq_1}"
     }
     if (meta.single_end) {
         fastq_meta = [ meta, [ file(row.fastq_1) ] ]
     } else {
+        if (params.input_folder) {
+            row.fastq_2 = params.input_folder + "/" + row.fastq_2
+        }
         if (!file(row.fastq_2).exists()) {
             exit 1, "ERROR: Please check input samplesheet -> Read 2 FastQ file does not exist!\n${row.fastq_2}"
         }
