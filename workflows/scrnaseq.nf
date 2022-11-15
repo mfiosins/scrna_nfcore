@@ -112,6 +112,8 @@ workflow SCRNASEQ {
 
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
 
+    ch_input = INPUT_CHECK.out.samplesheet      // this may be parameter or generated file
+
     // Run FastQC
     ch_multiqc_fastqc = Channel.empty()
     if (!params.skip_fastqc){

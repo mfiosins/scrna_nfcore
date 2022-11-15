@@ -28,6 +28,7 @@ workflow INPUT_CHECK {
     emit:
     reads                                     // channel: [ val(meta), [ reads ] ]
     versions = samplesheet ? SAMPLESHEET_CHECK.out.versions : CREATE_CSV_FROM_FOLDER.out.versions // channel: [ versions.yml ]
+    samplesheet				// correct samplesheet, which can be parameter or generated
 }
 
 
